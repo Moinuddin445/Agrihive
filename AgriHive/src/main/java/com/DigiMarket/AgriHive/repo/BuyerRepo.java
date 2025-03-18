@@ -1,10 +1,10 @@
 package com.DigiMarket.AgriHive.repo;
 
-import com.DigiMarket.AgriHive.model.User;
+import com.DigiMarket.AgriHive.model.Buyer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepo extends JpaRepository<User, Long> {
+public interface BuyerRepo extends JpaRepository<Buyer, Long> {
     //Optional<User> fin(String phone);
 }

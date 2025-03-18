@@ -1,7 +1,7 @@
 package com.DigiMarket.AgriHive.controller;
 
-import com.DigiMarket.AgriHive.model.User;
-import com.DigiMarket.AgriHive.service.UserService;
+import com.DigiMarket.AgriHive.model.Buyer;
+import com.DigiMarket.AgriHive.service.BuyerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,12 @@ import java.util.List;
 @RequestMapping("/api")
 public class ProductController {
     @Autowired
-    UserService service;
+    BuyerService service;
 
 
-    @GetMapping("/user")
-    public List<User> getUser(){
-        return service.getUser();
+    @GetMapping("/buyer")
+    public List<Buyer> getBuyer(){
+
+        return service.getBuyer();
     }
 }

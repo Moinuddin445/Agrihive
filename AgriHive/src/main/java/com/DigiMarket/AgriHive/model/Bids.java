@@ -20,7 +20,7 @@ public class Bids {
 
     @ManyToOne
     @JoinColumn(name = "buyer_id", nullable = false)
-    private User buyer;
+    private Buyer buyer;
 
     private double bidAmount;
 

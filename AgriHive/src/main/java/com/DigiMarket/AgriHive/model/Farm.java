@@ -14,7 +14,7 @@ public class Farm {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Buyer buyer;
 
     private String farmName;
     private String location;
