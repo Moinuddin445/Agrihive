@@ -1,4 +1,4 @@
-package com.DigiMarket.AgriHive.repo;
-
-public interface PaymentRepo {
-}
+//package com.DigiMarket.AgriHive.repo;
+//
+//public interface PaymentRepo {
+//}

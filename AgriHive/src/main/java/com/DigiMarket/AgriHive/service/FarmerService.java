@@ -1,19 +1,19 @@
 package com.DigiMarket.AgriHive.service;
 
-import com.DigiMarket.AgriHive.model.Buyer;
-import com.DigiMarket.AgriHive.repo.BuyerRepo;
+import com.DigiMarket.AgriHive.model.Farmer;
+import com.DigiMarket.AgriHive.repo.FarmerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class BuyerService {
+public class FarmerService {
 
     @Autowired
-    BuyerRepo repo;
+    private FarmerRepo repo;
 
-    public List<Buyer> getBuyer(){
+    public List<Farmer> getAllFarmers(){
 
         return repo.findAll();
     }
