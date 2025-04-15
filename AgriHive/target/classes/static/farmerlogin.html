@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Login</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url("./images/wmremove-transformed.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background:transparent;
+            padding: 40px;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.616);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            color: white;
+            backdrop-filter: blur(30px);
+        }
+
+        .login-container h2 {
+            color: #08410c;
+            margin-bottom: 20px;
+        }
+
+        .login-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            font-size: 1rem;
+        }
+
+        .login-container button {
+            padding: 10px;
+            background-color: #1b5e20;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .login-container button:hover {
+            background-color: #2e7d32;
+        }
+
+        .profile-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f1f8e9;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-container h3 {
+            color: #1b5e20;
+        }
+
+        .profile-container p {
+            font-size: 1.2rem;
+            color: #333;
+        }
+        a{
+            color: white;
+        }
+
+        h2{
+            font-weight: bolder;
+            font-size: xx-large;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Farmer Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Enter Username " required>
+            <input type="password" id="password" placeholder="Enter Password" required>
+            <button type="button" id="loginButton">Login</button>
+            <p>Don't have an account? <a href="./farmerrigister.html" id="registerLink"> <b>Register here</b></a></p>
+        </form>
+
+    </div>
+
+    <script>
+        // JavaScript to handle login
+        document.getElementById("loginButton").addEventListener("click", function() {
+            // Get the user inputs
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Validate input
+            if (username === "" || password === "") {
+                alert("Please enter both username and password.");
+                return;
+            }
+
+            // Display the profile section
+            document.getElementById("profile").style.display = "block";
+
+            // Show the username in the profile
+            document.getElementById("displayUsername").textContent = username;
+
+            // Optionally, clear the form
+            document.getElementById("loginForm").reset();
+        });
+    </script>
+</body>
+</html>

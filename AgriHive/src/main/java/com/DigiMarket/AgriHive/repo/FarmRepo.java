@@ -9,6 +9,8 @@ import java.util.List;
 
 @Repository
 public interface FarmRepo extends JpaRepository<Farm, Long> {
-    List<Farm> findByFarmer(Farmer farmer); // Fetch farms by farmer
+    List<Farm> findByFarmer(Farmer farmer);
+
+    List<Farm> findByFarmerFarmerId(Long farmerId);// Fetch farms by farmer
 }
 

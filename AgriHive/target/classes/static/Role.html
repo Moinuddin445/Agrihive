@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Role</title>
+    <style>
+        
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        
+        body {
+            background: linear-gradient(-45deg, #4caf50, #8bc34a, #689f38, #558b2f);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 95%;
+            max-width: 1400px;
+            position: relative;
+            z-index: 1;
+            
+        }
+
+        .tile {
+            width: 450px;
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            
+            color: #33691e;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tile:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .tile i {
+            font-size: 4.5rem;
+            
+            margin-bottom: 20px;
+        }
+
+        .tile h2 {
+            font-size: 2rem;
+            margin: 0 0 10px 0;
+        }
+
+        .tile p {
+            font-size: 1.2rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .partition {
+            width: 2px;
+            
+            height: 280px;
+            background: #d9d9d9;
+            
+            margin: 0 20px;
+            
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #ffffff;
+            /* White color for contrast with background */
+            text-align: center;
+            margin-bottom: 50px;
+            position: absolute;
+            top: 5%;
+            width: 100%;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .tile {
+                margin: 20px 0;
+                width: 90%;
+            }
+
+            .partition {
+                display: none;
+                /* Hide partition on smaller screens */
+            }
+
+            .tile:hover {
+                transform: translateY(-5px) scale(1.03);
+            }
+        }
+
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Select Your Role</h1>
+    <div class="container">
+        <!-- Farmer Tile -->
+        <a href="./farmerlogin.html">
+            <div class="tile farmer">
+                <i>🌾</i>
+                <h2>Farmer</h2>
+                <p>Sell your produce directly to customers<br>and manage your inventory easily.</p>
+            </div>
+        </a>
+
+        <!-- Partition -->
+        <div class="partition"></div>
+
+        <!-- Customer Tile -->
+        <a href="./costumerlogin.html">
+            <div class="tile customer">
+            <i>🛒</i>
+            <h2>Customer</h2>
+            <p>Browse fresh produce from farmers<br>and make sustainable choices.</p>
+            </div>
+        </a>
+    </div>
+</body>
+
+</html>
