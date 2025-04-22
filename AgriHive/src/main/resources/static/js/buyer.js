@@ -12,11 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch(API_URL)
     .then(res => res.json())
     .then(data => {
-      console.log("🔍 Fetched data from API:", data); // 👈 ADD THIS
-      allProducts = data;
+      allProducts = data.sort((a, b) => b.productId - a.productId); // newest first
       renderProducts(allProducts);
     })
-
     .catch(err => {
       console.error("Error fetching products:", err);
       productGrid.innerHTML = "<p>Error loading products</p>";
@@ -36,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const card = document.createElement("div");
       card.className = "product-card";
 
-      const imageUrl = product.imageUrl || 'https://via.placeholder.com/200';
+      const imageUrl = `http://localhost:8080/Pimages/${product.imageName}`;
 
       card.innerHTML = `
         <img src="${imageUrl}" alt="${product.name}">
@@ -50,8 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
       productGrid.appendChild(card);
     });
 
-
-    // ✅ Re-bind click listeners after rendering
+    // Re-bind click listeners after rendering
     bindAddToCartButtons();
   }
 
@@ -63,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const product = allProducts.find(p => p.productId === productId);
         if (product) {
           cart.push(product);
-          updateCartUI(); // will now use the correct version
+          updateCartUI();
         }
       });
     });
@@ -96,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 });
 
-// ✅ Keep only this version outside
 function updateCartUI() {
   const cartItems = document.getElementById("cart-items");
   cartItems.innerHTML = "";

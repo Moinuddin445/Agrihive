@@ -13,8 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Farm {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "farm_id")
     private Long farmId;
 
     @Column(nullable = false)
@@ -24,7 +26,7 @@ public class Farm {
     private String location;
 
     @ManyToOne
-    @JoinColumn(name = "farmerId")
+    @JoinColumn(name = "farmer_id", nullable=false)
     private Farmer farmer;
 
     @OneToMany(mappedBy = "farm", cascade = CascadeType.ALL)
@@ -69,5 +71,6 @@ public class Farm {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
 }
 

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -19,16 +20,17 @@ public class FarmerController {
 
     // ✅ Signup
     @PostMapping("/signup")
-    public ResponseEntity<Farmer> signup(@RequestBody Farmer farmer) {
+    public ResponseEntity<?> signup(@RequestBody Farmer farmer) {
         if (service.existsByPhone(farmer.getPhone())) {
-            return ResponseEntity.badRequest().body(null); // Phone already exists
+            return ResponseEntity.badRequest().body("Phone number already registered.");
         }
         if (service.existsByEmail(farmer.getEmail())) {
-            return ResponseEntity.badRequest().body(null); // Email already exists
+            return ResponseEntity.badRequest().body("Email already registered.");
         }
         Farmer saved = service.saveFarmer(farmer);
         return ResponseEntity.ok(saved);
     }
+
 
     // ✅ Login
     @PostMapping("/login")

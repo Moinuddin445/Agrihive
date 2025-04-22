@@ -4,20 +4,29 @@ import com.DigiMarket.AgriHive.model.Farm;
 import com.DigiMarket.AgriHive.model.Product;
 import com.DigiMarket.AgriHive.repo.FarmRepo;
 import com.DigiMarket.AgriHive.repo.ProductRepo;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProductService {
 
-    @Autowired
-    private ProductRepo productRepo;
+    private final ProductRepo productRepo;
+    private final FarmRepo farmRepo;
 
     @Autowired
-    private FarmRepo farmRepo;
+    public ProductService(ProductRepo productRepo, FarmRepo farmRepo) {
+        this.productRepo = productRepo;
+        this.farmRepo = farmRepo;
+    }
 
     // ✅ Get all products
     public List<Product> getAllProducts() {
@@ -33,7 +42,7 @@ public class ProductService {
     public Product createProduct(Long farmId, Product product) {
         Optional<Farm> farmOpt = farmRepo.findById(farmId);
         if (farmOpt.isPresent()) {
-            product.setFarm(farmOpt.get());
+            product.setFarm(farmOpt.get()); // Directly set farm, no Optional wrapper
             return productRepo.save(product);
         } else {
             throw new RuntimeException("Farm not found with ID: " + farmId);
@@ -67,5 +76,28 @@ public class ProductService {
     // ✅ Get all products for a specific farm
     public List<Product> getProductsByFarmId(Long farmId) {
         return productRepo.findByFarmFarmId(farmId);
+    }
+
+    // ✅ Add a product (with image upload support)
+    public ResponseEntity<String> addProduct(String name, String category, double quantity, double pricePerKg, LocalDate harvestDate, String description, @NotNull MultipartFile imageFile) throws IOException {
+        Product product = new Product();
+        product.setName(name);
+        product.setCategory(category);
+        product.setQuantity(quantity);
+        product.setPricePerKg(pricePerKg);
+        product.setHarvestDate(harvestDate);
+        product.setDescription(description);
+        product.setAvailable(true);
+
+        // Handle image file
+        if (imageFile != null && !imageFile.isEmpty()) {
+            product.setImageName(imageFile.getOriginalFilename());
+            product.setImageType(imageFile.getContentType());
+            product.setImageData(imageFile.getBytes());
+        }
+
+        productRepo.save(product);
+
+        return new ResponseEntity<>("Product added successfully", HttpStatus.CREATED); // Use CREATED status
     }
 }

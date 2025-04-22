@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Login</title>
+    <link rel="stylesheet" href="./css/login.css" />
+</head>
+<body>
+<div class="login-container">
+    <h2>User Login</h2>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required />
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone" placeholder="Enter phone number" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter password" required />
+        </div>
+        <button type="submit" class="btn">Login</button>
+        <div>
+            <p>Don't have an account ?</p>
+            <a href="Role.html">signup</a>
+        </div>
+
+    </form>
+    <div id="message" class="message"></div>
+</div>
+
+<script type="module" src="./js/login.js"></script>
+</body>
+</html>

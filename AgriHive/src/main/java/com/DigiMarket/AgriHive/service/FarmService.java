@@ -14,10 +14,15 @@ import java.util.Optional;
 public class FarmService {
 
     @Autowired
-    private FarmRepo farmRepository;
+    private static FarmRepo farmRepository;
 
     @Autowired
     private FarmerRepo farmerRepository;
+
+    public static Farm findByFarmName(String farmName) {
+        return farmRepository.findByFarmName(farmName);
+    }
+
 
     // ✅ Get all farms
     public List<Farm> getAllFarms() {

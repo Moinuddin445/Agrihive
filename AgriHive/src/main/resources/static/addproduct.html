@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product - AgriHive</title>
+    <link rel="stylesheet" href="css/addproduct.css">
+</head>
+<body>
+<div class="container">
+    <h2>Add New Product</h2>
+    <form id="productForm" enctype="multipart/form-data" method="post">
+        <label>Product Name:</label>
+        <input type="text" name="name" required>
+
+        <label>Category:</label>
+        <input type="text" name="category" required>
+
+        <label>Quantity (kg):</label>
+        <input type="number" name="quantity" step="0.01" required>
+
+        <label>Price Per Kg:</label>
+        <input type="number" name="pricePerKg" step="0.01" required>
+
+        <label>Harvest Date:</label>
+        <input type="date" name="harvestDate" required>
+
+        <label>Description:</label>
+        <textarea name="description" rows="4"></textarea>
+
+        <label>Image:</label>
+        <input type="file" name="image" accept="image/*" required>
+
+        <button type="submit">Add Product</button>
+        <div class="message" id="responseMessage"></div>
+    </form>
+</div>
+
+<script src="js/addproduct.js"></script>
+</body>
+</html>

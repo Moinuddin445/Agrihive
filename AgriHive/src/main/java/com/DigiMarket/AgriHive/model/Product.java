@@ -1,10 +1,7 @@
 package com.DigiMarket.AgriHive.model;
 
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
@@ -21,8 +18,8 @@ public class Product {
     private Long productId;
 
     @ManyToOne
-    @JoinColumn(name = "farmId", nullable = false)
-    private Farm farm;  // Reference to Farm
+    @JoinColumn(name = "farm_id", referencedColumnName = "farm_id")
+    private Farm farm;  // Direct reference to Farm entity, no Optional
 
     @Column(nullable = false)
     private String name;
@@ -42,6 +39,9 @@ public class Product {
     @Column(nullable = false)
     private boolean available = true;
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
     private String imageName;
     private String imageType;
 
@@ -49,11 +49,6 @@ public class Product {
     @Column(columnDefinition = "LONGBLOB")
     @JsonIgnore
     private byte[] imageData;
-
-
-    public Long getFarmId() {
-        return this.farm != null ? this.farm.getFarmId() : null;
-    }
 
     public Long getProductId() {
         return productId;
@@ -71,6 +66,14 @@ public class Product {
         this.farm = farm;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String getName() {
         return name;
     }
@@ -85,14 +88,6 @@ public class Product {
 
     public void setQuantity(double quantity) {
         this.quantity = quantity;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public double getPricePerKg() {
@@ -119,6 +114,14 @@ public class Product {
         this.available = available;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getImageName() {
         return imageName;
     }
@@ -143,5 +146,3 @@ public class Product {
         this.imageData = imageData;
     }
 }
-
-

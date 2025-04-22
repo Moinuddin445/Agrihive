@@ -42,7 +42,7 @@ public class BuyerService {
     // Update buyer
     public Buyer updateBuyer(Long id, Buyer updatedBuyer) {
         return buyerRepo.findById(id).map(buyer -> {
-            buyer.setName(updatedBuyer.getName());
+            buyer.setfullName(updatedBuyer.getfullName());
             buyer.setPhone(updatedBuyer.getPhone());
             buyer.setEmail(updatedBuyer.getEmail());
             buyer.setPassword(updatedBuyer.getPassword());

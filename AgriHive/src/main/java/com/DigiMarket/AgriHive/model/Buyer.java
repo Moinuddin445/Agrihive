@@ -15,7 +15,7 @@ public class Buyer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long buyerId;
 
-    private String name;
+    private String fullName;
 
     @Column(unique = true, nullable = false)
     private String phone;
@@ -36,12 +36,12 @@ public class Buyer {
         this.buyerId = buyerId;
     }
 
-    public String getName() {
-        return name;
+    public String getfullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setfullName(String name) {
+        this.fullName = name;
     }
 
     public String getPhone() {

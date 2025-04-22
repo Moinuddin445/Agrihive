@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Registration</title>
+    <link rel="stylesheet" href="./css/buyerregister.css" />
+</head>
+<body>
+<div class="registration-container">
+    <h1>Welcome to the AgriHive Portal</h1>
+    <h2>Register as a Buyer</h2>
+    <form id="registrationForm">
+        <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="shippingAddress">Shipping Address</label>
+            <input type="text" id="shippingAddress" name="shippingAddress" placeholder="Enter your address" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter a secure password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password" required>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" id="submitBtn">Register</button>
+        </div>
+        <div>
+            <p>Have an account in Agrihive? <a href="login.html">Login</a></p>
+        </div>
+    </form>
+</div>
+
+<script src="./js/buyerregister.js"></script>
+</body>
+</html>
