@@ -1,5 +1,6 @@
 package com.DigiMarket.AgriHive.service;
 
+import com.DigiMarket.AgriHive.DTO.ProductDTO;
 import com.DigiMarket.AgriHive.model.Farm;
 import com.DigiMarket.AgriHive.model.Product;
 import com.DigiMarket.AgriHive.repo.FarmRepo;
@@ -38,9 +39,9 @@ public class ProductService {
     }
 
     // ✅ Get product by ID
-    public Optional<Product> getProductById(Long id) {
-        return productRepo.findById(id);
-    }
+//    public Optional<Product> getProductById(Long id) {
+//        return productRepo.findById(id);
+//    }
 
     // ✅ Create product for a farm
     public Product createProduct(Long farmId, Product product) {
@@ -78,9 +79,44 @@ public class ProductService {
     }
 
     // ✅ Get all products for a specific farm
-    public List<Product> getProductsByFarmId(Long farmId) {
-        return productRepo.findByFarmFarmId(farmId);
+    public ResponseEntity<ProductDTO> getProductById(Long id) {
+        // Fetch product from the database by ID
+        Optional<Product> productOpt = productRepo.findById(id);
+
+        // Check if the product exists
+        if (productOpt.isPresent()) {
+            Product product = productOpt.get();
+
+            // Ensure that farm and farmer are not null before accessing their properties
+            if (product.getFarm() != null && product.getFarm().getFarmer() != null) {
+                // Map Product to ProductDTO
+                ProductDTO productDTO = new ProductDTO(
+                        product.getProductId(),
+                        product.getName(),
+                        product.getDescription(),
+                        product.getCategory(),
+                        product.getPricePerKg(),
+                        (int) product.getQuantity(),  // Assuming quantity is a double but casting to int
+                        product.getFarm().getFarmName(), // Farm name
+                        product.getFarm().getLocation(), // Farm location
+                        product.getFarm().getFarmer().getName(), // Farmer's name
+                        product.getImageName()
+                );
+
+                // Return successful response with the ProductDTO
+                return ResponseEntity.ok(productDTO);
+            } else {
+                // If farm or farmer is null, return NOT_FOUND with a message
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(null);  // You can also throw an exception here if needed
+            }
+        } else {
+            // Return NOT_FOUND response if the product doesn't exist in the database
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null);
+        }
     }
+
 
     // ✅ Add a product (with image upload support)
     public ResponseEntity<String> addProduct(Long farmId, String name, String category, double quantity,
@@ -166,4 +202,7 @@ public class ProductService {
         return productRepo.save(product);
     }
 
+    public List<Product> getProductsByFarmId(Long farmId) {
+        return productRepo.findByFarmFarmId(farmId);
+    }
 }

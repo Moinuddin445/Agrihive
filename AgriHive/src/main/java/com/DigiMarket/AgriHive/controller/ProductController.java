@@ -1,5 +1,6 @@
 package com.DigiMarket.AgriHive.controller;
 
+import com.DigiMarket.AgriHive.DTO.ProductDTO;
 import com.DigiMarket.AgriHive.model.Product;
 import com.DigiMarket.AgriHive.service.FarmService;
 import com.DigiMarket.AgriHive.service.ProductService;
@@ -35,27 +36,18 @@ public class ProductController {
 
     // ✅ Get product by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Product>> getProductById(@PathVariable Long id) {
-        Optional<Product> product = productService.getProductById(id);
-        if (product != null) {
-            return ResponseEntity.ok(product);
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
+        ProductDTO productDTO = productService.getProductById(id).getBody();
+
+        // Check if the productDTO is not null
+        if (productDTO != null) {
+            return ResponseEntity.ok(productDTO);  // Return 200 OK with the productDTO
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();  // Return 404 Not Found if the product doesn't exist
         }
     }
 
-    // ✅ Create a new product for a specific farm
-    @PostMapping("/farm/{farmId}")
-    public ResponseEntity<Product> createProduct(@PathVariable Long farmId, @RequestBody Product product) {
-        try {
-            Product createdProduct = productService.createProduct(farmId, product);
-            return ResponseEntity.ok(createdProduct);
-        } catch (RuntimeException ex) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
 
-    // ✅ Update a product
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
         try {
