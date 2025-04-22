@@ -110,3 +110,7 @@ function updateCartUI() {
   totalItem.textContent = `Total: ₹${total.toFixed(2)}`;
   cartItems.appendChild(totalItem);
 }
+
+document.getElementById('add-product-btn').addEventListener('click', () => {
+    window.location.href ='./owner.html';
+});

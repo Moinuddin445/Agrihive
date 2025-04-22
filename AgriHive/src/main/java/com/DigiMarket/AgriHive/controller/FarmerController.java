@@ -34,11 +34,14 @@ public class FarmerController {
 
     // ✅ Login
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Farmer loginRequest) {
-        Optional<Farmer> farmerOpt = service.findByEmail(loginRequest.getEmail());
+    public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
+        String phone = loginRequest.get("phone");
+        String password = loginRequest.get("password");
+
+        Optional<Farmer> farmerOpt = service.findByPhone(phone);
         if (farmerOpt.isPresent()) {
             Farmer farmer = farmerOpt.get();
-            if (farmer.getPassword().equals(loginRequest.getPassword())) {
+            if (farmer.getPassword().equals(password)) {
                 return ResponseEntity.ok(farmer);
             } else {
                 return ResponseEntity.status(401).body("Invalid password");
@@ -47,6 +50,7 @@ public class FarmerController {
             return ResponseEntity.status(404).body("Farmer not found");
         }
     }
+
 
     // 🔁 Get all
     @GetMapping
