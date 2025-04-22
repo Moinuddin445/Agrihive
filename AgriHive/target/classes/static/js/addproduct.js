@@ -4,8 +4,14 @@ document.getElementById("productForm").addEventListener("submit", async function
     const form = event.target;
     const formData = new FormData(form);
 
-    // Set farmId here - hardcoded for now or fetch from session
-    formData.append("farmId", 1); // TODO: Replace with dynamic farm ID based on login
+    // 1. Get farmId from sessionStorage
+    const farmId = sessionStorage.getItem("farmId") || 1; // Default to 1 if not set
+    formData.append("farmId", farmId);
+
+    const responseMessage = document.getElementById("responseMessage");
+
+    // 2. Show loading message
+    responseMessage.innerText = "Submitting product... Please wait.";
 
     try {
         const response = await fetch("http://localhost:8080/api/products/add", {
@@ -14,10 +20,16 @@ document.getElementById("productForm").addEventListener("submit", async function
         });
 
         const result = await response.json();
-        document.getElementById("responseMessage").innerText = result.message || "Product added successfully!";
+
+        // 3. Handle success or backend error
+        if (!response.ok) {
+            throw new Error(result.message || "Server error");
+        }
+
+        responseMessage.innerText = result.message || "Product added successfully!";
         form.reset();
     } catch (error) {
-        document.getElementById("responseMessage").innerText = "Failed to add product. Try again.";
+        responseMessage.innerText = `Failed to add product: ${error.message}`;
         console.error("Error:", error);
     }
 });

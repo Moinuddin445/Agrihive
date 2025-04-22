@@ -50,6 +50,17 @@ public class Product {
     @JsonIgnore
     private byte[] imageData;
 
+    @Column(nullable = true)
+    private String imagePath;
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
     public Long getProductId() {
         return productId;
     }

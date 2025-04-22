@@ -4,10 +4,16 @@ import com.DigiMarket.AgriHive.model.Product;
 import com.DigiMarket.AgriHive.service.FarmService;
 import com.DigiMarket.AgriHive.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -75,5 +81,33 @@ public class ProductController {
     @GetMapping("/farm/{farmId}")
     public List<Product> getProductsByFarm(@PathVariable Long farmId) {
         return productService.getProductsByFarmId(farmId);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Map<String, String>> addProduct(
+            @RequestParam("farmId") Long farmId,
+            @RequestParam("name") String name,
+            @RequestParam("category") String category,
+            @RequestParam("quantity") double quantity,
+            @RequestParam("pricePerKg") double pricePerKg,
+            @RequestParam("harvestDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate harvestDate,
+            @RequestParam("description") String description,
+            @RequestParam("image") MultipartFile imageFile
+    ) {
+        try {
+            // Call service layer to handle the product creation
+            String responseMessage = String.valueOf(productService.addProduct(farmId, name, category, quantity, pricePerKg, harvestDate, description, imageFile));
+
+            // Create a response map to return as JSON
+            Map<String, String> responseBody = new HashMap<>();
+            responseBody.put("message", responseMessage);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseBody);
+        } catch (Exception e) {
+            // In case of error, return JSON with error message
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
     }
 }
