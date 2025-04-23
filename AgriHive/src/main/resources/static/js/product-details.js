@@ -1,5 +1,3 @@
-// product-details.js
-
 function showToast(message) {
   const toast = document.getElementById("toast");
   if (!toast) return;
@@ -52,13 +50,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Handle Buy Now click
       document.querySelector(".buy-now").addEventListener("click", () => {
-        // Check if there is enough stock for the purchase
         if (product.quantity > 0) {
-          window.location.href = "checkout.html"; // Redirect to checkout page
+          // Instead of just redirecting to the same page, consider passing the product ID to the order page
+          window.location.href = `order.html?productId=${product.productId}`;
         } else {
           showToast("❌ Sorry, this product is out of stock.");
         }
       });
+
     })
     .catch(err => {
       console.error("Error fetching product details:", err);
