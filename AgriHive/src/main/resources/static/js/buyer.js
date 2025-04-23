@@ -9,10 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let allProducts = [];
   let cart = [];
 
+  // Fetch products from API
   fetch(API_URL)
     .then(res => res.json())
     .then(data => {
-      allProducts = data.sort((a, b) => b.productId - a.productId); // newest first
+      console.log(data); // Log API response to check the data structure
+      allProducts = data.sort((a, b) => b.productId - a.productId); // Sort newest first
       renderProducts(allProducts);
     })
     .catch(err => {
@@ -23,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
       loadingSpinner.style.display = "none";
     });
 
+  // Render products to the grid
   function renderProducts(products) {
     productGrid.innerHTML = "";
     if (products.length === 0) {
@@ -52,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     bindAddToCartButtons();
   }
 
+  // Bind the add to cart buttons after rendering
   function bindAddToCartButtons() {
     const buttons = document.querySelectorAll(".add-to-cart");
     buttons.forEach(button => {
@@ -66,6 +70,38 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Update the cart UI
+  function updateCartUI() {
+    cartItems.innerHTML = ""; // Clear existing items
+    let total = 0;
+
+    cart.forEach(item => {
+      total += item.pricePerKg ?? 0;
+      const li = document.createElement("li");
+
+      // Create a link to the product details page
+      const link = document.createElement("a");
+      link.href = `product-details.html?id=${item.productId}`;
+      link.textContent = `${item.name} - ₹${(item.pricePerKg ?? 0).toFixed(2)}`;
+
+      // Append the link inside the list item
+      li.appendChild(link);
+      cartItems.appendChild(li);
+    });
+
+    const totalItem = document.createElement("li");
+    totalItem.style.fontWeight = "bold";
+    totalItem.textContent = `Total: ₹${total.toFixed(2)}`;
+    cartItems.appendChild(totalItem);
+
+    // Update cart count (optional: if you have a cart icon)
+    const cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) {
+      cartCountElement.textContent = cart.length;
+    }
+  }
+
+  // Category filter
   categoryButtons.forEach(button => {
     button.addEventListener("click", () => {
       categoryButtons.forEach(btn => btn.classList.remove("active"));
@@ -83,6 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Search filter for products
   window.filterProducts = function () {
     const searchTerm = document.getElementById("search-input").value.toLowerCase();
     const filtered = allProducts.filter(p =>
@@ -91,26 +128,9 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     renderProducts(filtered);
   };
-});
 
-function updateCartUI() {
-  const cartItems = document.getElementById("cart-items");
-  cartItems.innerHTML = "";
-  let total = 0;
-
-  cart.forEach(item => {
-    total += item.pricePerKg ?? 0;
-    const li = document.createElement("li");
-    li.textContent = `${item.name} - ₹${(item.pricePerKg ?? 0).toFixed(2)}`;
-    cartItems.appendChild(li);
+  // Add product button for the owner page
+  document.getElementById('add-product-btn').addEventListener('click', () => {
+    window.location.href = './owner.html';
   });
-
-  const totalItem = document.createElement("li");
-  totalItem.style.fontWeight = "bold";
-  totalItem.textContent = `Total: ₹${total.toFixed(2)}`;
-  cartItems.appendChild(totalItem);
-}
-
-document.getElementById('add-product-btn').addEventListener('click', () => {
-    window.location.href ='./owner.html';
 });
